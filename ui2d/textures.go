@@ -3,7 +3,9 @@ package ui2d
 import (
 	"path/filepath"
 	"strings"
-
+//	"runtime"
+	"os"
+//	"unsafe"
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -18,7 +20,17 @@ func (ui *ui) GetSinglePixelTex(color sdl.Color) *sdl.Texture {
 	pixels[1] = color.G
 	pixels[2] = color.B
 	pixels[3] = color.A
-	tex.Update(nil, pixels, 4)
+
+/*	if runtime.GOOS == "windows" {
+		tex.Update(nil, pixels, 4)
+	} else {
+		p := unsafe.Pointer(&pixels)
+                tex.Update(nil, p, 4)
+	}
+*/
+//        p := unsafe.Pointer(&pixels)
+        tex.Update(nil, pixels, 4)
+
 	return tex
 }
 
@@ -33,7 +45,7 @@ func (ui *ui) loadTextures() {
 	for _, filename := range filenames {
 
 		tmp := strings.TrimSuffix(filename, filepath.Ext(filename))
-		textureName := strings.Split(tmp, "\\")
+		textureName := strings.Split(tmp, string(os.PathSeparator))
 
 		tex := ui.imgFileToTexture(filename)
 		ui.texturesIndex[textureName[1]] = tex

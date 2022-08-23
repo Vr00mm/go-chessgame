@@ -4,6 +4,7 @@ import (
 	"chessgame/game"
 	"math/rand"
 	"strconv"
+	"os"
 
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
@@ -152,7 +153,7 @@ func NewUI(inputChan chan *game.Input, levelChan chan *game.Board) *ui {
 	mus.Play(-1)
 	*/
 
-	moovingPieceBase := "sounds\\footstep0"
+	moovingPieceBase := "sounds"+ string(os.PathSeparator)  +"footstep0"
 	for i := 0; i < 10; i++ {
 		moovePieceFile := moovingPieceBase + strconv.Itoa(i) + ".ogg"
 		moovePieceSound, err := mix.LoadWAV(moovePieceFile)
