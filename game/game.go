@@ -5,12 +5,34 @@ import (
 	"fmt"
 	"log"
 	"strings"
+
+	"github.com/veandco/go-sdl2/mix"
+	"github.com/veandco/go-sdl2/sdl"
+	"github.com/veandco/go-sdl2/ttf"
 )
 
 type Game struct {
 	LevelChans []chan *Board
 	InputChan  chan *Input
 	Board      *Board
+}
+
+func init() {
+	err := sdl.Init(sdl.INIT_EVERYTHING)
+	if err != nil {
+		panic(err)
+	}
+
+	err = ttf.Init()
+	if err != nil {
+		panic(err)
+	}
+
+	err = mix.Init(mix.INIT_OGG)
+	//SDL Bug here, ignoring error
+	/*if err != nil {
+		panic(err)
+	}*/
 }
 
 const (
@@ -148,7 +170,7 @@ func loadBoard() *Board {
 			}
 
 			var t Tile
-			pos := Pos{x, y}
+			pos := Pos{y, x}
 
 			c := data[x][y]
 			switch c {
@@ -164,6 +186,7 @@ func loadBoard() *Board {
 		}
 		k++
 	}
+	fmt.Printf("%+v\n", level.Map)
 
 	return level
 }

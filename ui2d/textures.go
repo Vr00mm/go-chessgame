@@ -3,9 +3,10 @@ package ui2d
 import (
 	"path/filepath"
 	"strings"
-//	"runtime"
+
+	//	"runtime"
 	"os"
-//	"unsafe"
+	//	"unsafe"
 	"github.com/veandco/go-sdl2/img"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -21,15 +22,15 @@ func (ui *ui) GetSinglePixelTex(color sdl.Color) *sdl.Texture {
 	pixels[2] = color.B
 	pixels[3] = color.A
 
-/*	if runtime.GOOS == "windows" {
-		tex.Update(nil, pixels, 4)
-	} else {
-		p := unsafe.Pointer(&pixels)
-                tex.Update(nil, p, 4)
-	}
-*/
-//        p := unsafe.Pointer(&pixels)
-        tex.Update(nil, pixels, 4)
+	/*	if runtime.GOOS == "windows" {
+				tex.Update(nil, pixels, 4)
+			} else {
+				p := unsafe.Pointer(&pixels)
+		                tex.Update(nil, p, 4)
+			}
+	*/
+	//        p := unsafe.Pointer(&pixels)
+	tex.Update(nil, pixels, 4)
 
 	return tex
 }
@@ -58,10 +59,12 @@ func (ui *ui) imgFileToTexture(filename string) *sdl.Texture {
 	if err != nil {
 		panic(err)
 	}
+	defer pngImage.Free()
 
 	tex, err := ui.renderer.CreateTextureFromSurface(pngImage)
 	if err != nil {
 		panic(err)
 	}
+	//defer tex.Destroy()
 	return tex
 }

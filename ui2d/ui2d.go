@@ -3,32 +3,13 @@ package ui2d
 import (
 	"chessgame/game"
 	"math/rand"
-	"strconv"
 	"os"
+	"strconv"
 
 	"github.com/veandco/go-sdl2/mix"
 	"github.com/veandco/go-sdl2/sdl"
 	"github.com/veandco/go-sdl2/ttf"
 )
-
-func init() {
-
-	err := sdl.Init(sdl.INIT_EVERYTHING)
-	if err != nil {
-		panic(err)
-	}
-
-	err = ttf.Init()
-	if err != nil {
-		panic(err)
-	}
-
-	err = mix.Init(mix.INIT_OGG)
-	//SDL Bug here, ignoring error
-	/*if err != nil {
-		panic(err)
-	}*/
-}
 
 type mouseState struct {
 	leftButton  bool
@@ -153,7 +134,7 @@ func NewUI(inputChan chan *game.Input, levelChan chan *game.Board) *ui {
 	mus.Play(-1)
 	*/
 
-	moovingPieceBase := "sounds"+ string(os.PathSeparator)  +"footstep0"
+	moovingPieceBase := "sounds" + string(os.PathSeparator) + "footstep0"
 	for i := 0; i < 10; i++ {
 		moovePieceFile := moovingPieceBase + strconv.Itoa(i) + ".ogg"
 		moovePieceSound, err := mix.LoadWAV(moovePieceFile)
