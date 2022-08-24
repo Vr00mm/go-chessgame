@@ -192,7 +192,6 @@ func (ui *ui) Run() {
 			}
 		default:
 		}
-
 		ui.DrawTest(newLevel)
 		ui.renderer.Present()
 

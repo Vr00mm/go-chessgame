@@ -17,6 +17,7 @@ func (ui *ui) DrawTest(level *game.Board) {
 
 			texture, _ := ui.renderer.CreateTexture(sdl.PIXELFORMAT_RGBA8888,
 				sdl.TEXTUREACCESS_STATIC, int32(BlocSize), int32(BlocSize))
+			defer texture.Destroy()
 			dstRect := sdl.Rect{X: int32(x * BlocSize), Y: int32(y * BlocSize), W: int32(BlocSize), H: int32(BlocSize)}
 
 			if tile.Rune == "bg_black" {
@@ -30,6 +31,7 @@ func (ui *ui) DrawTest(level *game.Board) {
 			ui.renderer.SetRenderTarget(nil)
 		}
 	}
+
 	// Render Pieces
 	for pos, piece := range level.Pieces {
 		imageName := piece[0].Team + "_" + piece[0].Rune
